@@ -5,7 +5,15 @@
     <title>Document</title>
 </head>
 <body>
-    Quoting Dojo
+    <h1>Welcome to Quoting Dojo!</h1>
+    <form action="/quotes" method="post">
+        <input type="text" name="name" placeholder="Your name">
+        <br>
+        <textarea name="quote" placeholder="Your quotes"></textarea>
+        <br>
+        <input type="submit" value="Add my quote!">
+    </form>
+    <button onclick="location.href = '/quotes'" >Skip to quotes!</button>
     
 </body>
 </html>

@@ -13,35 +13,38 @@ app.set( 'view engine', 'ejs' );
 
 mongoose.connect( "mongodb://localhost/basic_mongoose" );
 
-// var UserSchema = new mongoose.Schema( {
-//     name: String,
-//     age: Number
-// }, {timestamps: true} )
-// mongoose.model( "User", UserSchema );
-// var User = mongoose.model( "User" );
+var QuoteSchema = new mongoose.Schema( {
+    name: String,
+    quote: String
+}, {timestamps: true} )
+mongoose.model( "Quote", QuoteSchema );
+var Quote = mongoose.model( "Quote" );
 
 mongoose.Promise = global.Promise;
 
 app.get( '/', function( req, res ) {
-    // User.find( {}, function( err, users ){
-    // // User.find( {name:"Donald"}, function( err, users ){
-    //     console.log( "users:", users );
-    // })
     res.render( "index" );
 });
 
-// app.post( '/users', function( req, res ) {
-//     console.log( 'post data:', req.body );
-//     var user = new User( {name: req.body.name, age: req.body.age} );
-//     user.save( function( err ){
-//         if( err ){
-//             console.log( "something went wrong" );
-//         } else {
-//             console.log( "successfully added a user!" );
-//         }
-//     })
-//     res.redirect( "/" );
-// });
+app.post( '/quotes', function( req, res ){
+    console.log( 'post data:', req.body );
+    var quote = new Quote( {name: req.body.name, quote: req.body.quote} );
+    quote.save( function( err ){
+        if( err ){
+            console.log( "something went wrong" );
+        } else {
+            console.log( "successfully added a quote" );
+        }
+    })
+    res.redirect( "/quotes" );
+})
+
+app.get( '/quotes', function( req, res ){
+    Quote.find( {}, function( err, quotes ){
+        console.log( quotes );
+        res.render( "quotes", {quotes: quotes} );
+    })
+})
 
 var server = app.listen( 8000, function() {
     console.log( "listening on port 8000" );
